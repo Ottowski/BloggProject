@@ -26,7 +26,7 @@ function App() {
     e.preventDefault();
     try {
       // Make API call to login endpoint
-      const response = await fetch('http://localhost:8080/api/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ function App() {
       }
 
       // Make API call to register endpoint
-      const response = await fetch('http://localhost:8080/api/register', {
+      const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ function App() {
                 onChange={(e) => setRegisterData({ ...registerData, confirmPassword: e.target.value })}
               />
             </Form.Group>
-            <Button variant="primary" type="submit" style={{ marginTop: '10px' }}>
+            <Button variant="success" type="submit" style={{ marginTop: '10px' }}>
               Register
             </Button>
           </Form>
