@@ -1,10 +1,16 @@
-HELP.md
+# .gitignore
+
+# Ignore target folder
 target/
+
+# Exclude Maven wrapper but include its .jar file
 !.mvn/wrapper/maven-wrapper.jar
+
+# Include target folders inside src/main and src/test
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+# STS (Spring Tool Suite) files
 .apt_generated
 .classpath
 .factorypath
@@ -13,13 +19,13 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
+# IntelliJ IDEA files
 .idea
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# NetBeans files
 /nbproject/private/
 /nbbuild/
 /dist/
@@ -29,5 +35,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
+# VS Code files
 .vscode/
+
+# Include the frontend folder
+!/frontend/
