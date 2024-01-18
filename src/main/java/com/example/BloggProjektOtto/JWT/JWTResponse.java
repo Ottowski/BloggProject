@@ -1,5 +1,4 @@
 package com.example.BloggProjektOtto.JWT;
-
 import com.example.BloggProjektOtto.DTO.UserDTO;
 import lombok.Data;
 @Data
