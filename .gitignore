@@ -38,5 +38,3 @@ build/
 # VS Code files
 .vscode/
 
-# Include the frontend folder
-!**/src/frontend/
