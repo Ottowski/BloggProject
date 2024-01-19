@@ -4,23 +4,6 @@ import { Button, Navbar, Container, Modal, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
-
-const BlogPostsList = ({ blogPosts }) => {
-  return (
-    <div>
-      <h2>All Blog Posts</h2>
-      {blogPosts.map(post => (
-        <div key={post.id}>
-          <h3>{post.title}</h3>
-          <p>{post.bodyText}</p>
-          <p>Date: {post.date}</p>
-          {/* Additional styling and details as needed */}
-        </div>
-      ))}
-    </div>
-  );
-};
-
 const BlogPostForm = ({ onSubmit }) => {
   const [blogPostData, setBlogPostData] = useState({ title: '', bodyText: '' });
 
@@ -57,5 +40,21 @@ const BlogPostForm = ({ onSubmit }) => {
     </div>
   );
 };
+
+const BlogPostsList = ({ blogPosts }) => {
+  return (
+    <div>
+      {Array.isArray(blogPosts) ? (
+        blogPosts.map((post) => (
+          // Your mapping logic here
+          <div key={post.id}>{post.title}</div>
+        ))
+      ) : (
+        <p>Blog posts data is not an array.</p>
+      )}
+    </div>
+  );
+};
+
 
 export default BlogPostsList;

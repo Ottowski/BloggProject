@@ -104,28 +104,30 @@ function App() {
   };
 
   const fetchAllBlogPosts = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/api/blog-posts/all');
-      setBlogPosts(response.data);
-    } catch (error) {
-      console.error('Error fetching Blog Posts:', error);
-    }
-  };
+      try {
+        const response = await axios.get('http://localhost:8080/api/blog-posts/all');
+        console.log('Fetched Blog Posts:', response.data);
+        setBlogPosts(response.data);
+      } catch (error) {
+        console.error('Error fetching Blog Posts:', error);
+      }
+    };
 
-  const handleBlogPostSubmit = async (blogPostData) => {
-    try {
-      const response = await axios.post('http://localhost:8080/api/blog-posts/create', blogPostData);
-      console.log('Blog Post created:', response.data);
-      // Optionally, you can fetch and update the list of blog posts here
-    } catch (error) {
-      console.error('Error creating Blog Post:', error);
-      // Handle error, e.g., show an error message
-    }
-  };
+    const handleBlogPostSubmit = async (blogPostData) => {
+      try {
+        const response = await axios.post('http://localhost:8080/api/blog-posts/create', blogPostData);
+        console.log('Blog Post created:', response.data);
 
-  useEffect(() => {
-    fetchAllBlogPosts();
-  }, [isLoggedIn]);
+        // Fetch updated list of blog posts after creating a new one
+        fetchAllBlogPosts();
+      } catch (error) {
+        console.error('Error creating Blog Post:', error);
+        // Handle error, e.g., show an error message
+      }
+    };
+    useEffect(() => {
+      fetchAllBlogPosts();
+    }, [isLoggedIn]);
 
  return (
      <div>
