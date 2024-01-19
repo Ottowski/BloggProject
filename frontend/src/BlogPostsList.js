@@ -46,8 +46,10 @@ const BlogPostsList = ({ blogPosts }) => {
     <div>
       {Array.isArray(blogPosts) ? (
         blogPosts.map((post) => (
-          // Your mapping logic here
-          <div key={post.id}>{post.title}</div>
+          <div key={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.bodyText}</p>
+          </div>
         ))
       ) : (
         <p>Blog posts data is not an array.</p>
@@ -55,6 +57,5 @@ const BlogPostsList = ({ blogPosts }) => {
     </div>
   );
 };
-
 
 export default BlogPostsList;
