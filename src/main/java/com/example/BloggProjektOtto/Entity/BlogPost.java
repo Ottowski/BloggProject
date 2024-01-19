@@ -2,6 +2,7 @@ package com.example.BloggProjektOtto.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -16,12 +17,10 @@ public class BlogPost {
     private String bodyText;
     @Column(name = "title")
     private String title;
+    @Setter
     @Getter
     @Column(name = "date")
     private LocalDateTime date;
-
-    public void setDate(LocalDateTime now) {
-    }
     public Long getId() {
         return id;
     }
@@ -31,4 +30,5 @@ public class BlogPost {
     public String getBodyText() {
         return bodyText;
     }
+
 }

@@ -23,6 +23,7 @@ public class BlogPostService {
         return blogPostRepository.save(blogPost);
     }
 
+
     public List<BlogPost> getAllBlogPosts() {
         List<BlogPost> blogPosts = blogPostRepository.findAll();
 

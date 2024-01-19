@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Button, Navbar, Container, Modal, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/css/all.css';
 
 const BlogPostForm = ({ onSubmit }) => {
   const [blogPostData, setBlogPostData] = useState({ title: '', bodyText: '' });
@@ -18,7 +17,7 @@ const BlogPostForm = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(blogPostData);
-    setBlogPostData({ title: '', bodyText: '' }); // Clear the form after submission
+    setBlogPostData({ title: '', bodyText: '' });
   };
 
   return (
@@ -49,6 +48,7 @@ const BlogPostsList = ({ blogPosts }) => {
           <div key={post.id}>
             <h3>{post.title}</h3>
             <p>{post.bodyText}</p>
+            <p>Date: {post.date}</p>
           </div>
         ))
       ) : (
