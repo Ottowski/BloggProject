@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Button, Navbar, Container, Modal, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
@@ -94,6 +94,36 @@ function App() {
   useEffect(() => {
     fetchAllBlogPosts();
   }, [isLoggedIn]);
+  // Inside the App component
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortOption, setSortOption] = useState('latest'); // or 'oldest'
+
+  // ...
+
+  // Add a new function for sorting the blog posts
+  const sortBlogPosts = (posts, option) => {
+    return option === 'latest'
+      ? [...posts].sort((a, b) => new Date(b.date) - new Date(a.date))
+      : [...posts].sort((a, b) => new Date(a.date) - new Date(b.date));
+  };
+
+  // Filter and sort the blog posts based on search and sort options
+  const filteredAndSortedPosts = useMemo(() => {
+    const filteredPosts = blogPosts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.bodyText.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    return sortBlogPosts(filteredPosts, sortOption);
+  }, [blogPosts, searchQuery, sortOption]);
+
+  // ...
+
+  // Modify the useEffect dependency to include sortOption
+  useEffect(() => {
+    fetchAllBlogPosts();
+  }, [isLoggedIn, sortOption]);
+
 
   return (
     <div>
@@ -126,8 +156,31 @@ function App() {
       </Navbar>
       <Container>
         <h1>Hello, welcome to my blog page!</h1>
+        <div style={{ marginBottom: '20px' }}>
+                <Form>
+                  <Form.Group controlId="searchQuery">
+                    <Form.Control
+                      type="text"
+                      placeholder="Search for blog posts..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="sortOption">
+                    <Form.Label>Sort By:</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={sortOption}
+                      onChange={(e) => setSortOption(e.target.value)}
+                    >
+                      <option value="latest">Latest</option>
+                      <option value="oldest">Oldest</option>
+                    </Form.Control>
+                  </Form.Group>
+                </Form>
+              </div>
          <BlogPostForm onSubmit={handleBlogPostSubmit} isLoggedIn={isLoggedIn} username={loginData.username} />
-        <BlogPostsList blogPosts={blogPosts} />
+        <BlogPostsList blogPosts={blogPosts, filteredAndSortedPosts} />
       </Container>
 
       {/* Login Modal */}
