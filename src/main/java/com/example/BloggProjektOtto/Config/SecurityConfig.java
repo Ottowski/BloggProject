@@ -1,9 +1,10 @@
 package com.example.BloggProjektOtto.Config;
-import com.example.BloggProjektOtto.Service.UserDetailsService;
+
+import com.example.BloggProjektOtto.JWT.JWTAuthenticationFilter;
 import com.example.BloggProjektOtto.Service.JWTService;
+import com.example.BloggProjektOtto.Service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import com.example.BloggProjektOtto.JWT.JWTAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -25,19 +25,24 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
+@ComponentScan(basePackages = "com.example.BloggProjektOtto")
 public class SecurityConfig {
-    private final UserDetailsService UserDetailsService;
+    private final UserDetailsService userDetailsService;
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
-    public SecurityConfig(UserDetailsService UserDetailsService, JWTAuthenticationFilter jwtAuthenticationFilter) {
-        this.UserDetailsService = UserDetailsService;
+
+    public SecurityConfig(UserDetailsService userDetailsService, JWTAuthenticationFilter jwtAuthenticationFilter) {
+        this.userDetailsService = userDetailsService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
+
     @Bean
-    public JWTAuthenticationFilter jwtAuthenticationFilter(JWTService jwtService, org.springframework.security.core.userdetails.UserDetailsService userService) {
+    public JWTAuthenticationFilter jwtAuthenticationFilter(JWTService jwtService, @Qualifier("customUserDetailsService") org.springframework.security.core.userdetails.UserDetailsService userService) {
         return new JWTAuthenticationFilter(jwtService, userService);
     }
+
     @Bean
     public AuthenticationProvider authenticationProvider(@Qualifier("customUserDetailsService") org.springframework.security.core.userdetails.UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -45,24 +50,32 @@ public class SecurityConfig {
         provider.setUserDetailsService(userDetailsService);
         return provider;
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
+        http
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(withDefaults())
-                .authorizeHttpRequests(configure -> configure
-                        .requestMatchers(HttpMethod.POST, "/api/register","/api/login", "/api/blog-posts/create").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/users", "/api/blog-posts/all").permitAll()
-                        .anyRequest().authenticated())
-                .sessionManagement(sessionManagement -> sessionManagement
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider(UserDetailsService, passwordEncoder()))
+                .authorizeRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers(HttpMethod.POST, "/api/register", "/api/login", "/api/blog-posts/create").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/users", "/api/blog-posts/all").permitAll()
+                                .anyRequest().authenticated()
+                )
+                .sessionManagement(sessionManagement ->
+                        sessionManagement
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authenticationProvider(authenticationProvider(userDetailsService, passwordEncoder()))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -75,6 +88,7 @@ public class SecurityConfig {
 
         return source;
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
