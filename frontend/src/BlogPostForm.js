@@ -39,7 +39,7 @@ const BlogPostForm = ({ onSubmit, isLoggedIn, username }) => {
           <Form.Label>Body Text</Form.Label>
           <Form.Control as="textarea" rows={4} placeholder="Enter the body text" value={blogPostData.bodyText} onChange={handleBodyTextChange} />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" style={{ marginTop: '10px' }}>
           Submit
         </Button>
       </Form>

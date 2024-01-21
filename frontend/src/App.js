@@ -6,6 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import BlogPostsList from './BlogPostsList';
 import BlogPostForm from './BlogPostForm';
 
+
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
