@@ -1,5 +1,5 @@
+// BlogPostsList.js
 import React from 'react';
-
 
 const BlogPostsList = ({ blogPosts }) => {
   return (
@@ -9,8 +9,7 @@ const BlogPostsList = ({ blogPosts }) => {
           <div key={post.id}>
             <h3>{post.title}</h3>
             <p>{post.bodyText}</p>
-            <p>Date: {post.date}</p>
-            <p>User: </p>
+            <p>Date: {post.date}, User: {post.username}</p>
           </div>
         ))
       ) : (

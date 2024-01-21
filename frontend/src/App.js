@@ -3,52 +3,8 @@ import { Button, Navbar, Container, Modal, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.css';
-import BlogPostsList from './BlogPostsList'; // Adjust the path based on your project structure
-
-const BlogPostForm = ({ onSubmit, isLoggedIn }) => {
-  const [blogPostData, setBlogPostData] = useState({ title: '', bodyText: '' });
-
-  const handleTitleChange = (e) => {
-    setBlogPostData({ ...blogPostData, title: e.target.value });
-  };
-
-  const handleBodyTextChange = (e) => {
-    setBlogPostData({ ...blogPostData, bodyText: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(blogPostData);
-    setBlogPostData({ title: '', bodyText: '' });
-  };
-
-  if (!isLoggedIn) {
-    return (
-      <div>
-        <p>Please log in to create a blog post.</p>
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <h2>Create Blog Post</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="blogPostTitle">
-          <Form.Label>Title</Form.Label>
-          <Form.Control type="text" placeholder="Enter the title" value={blogPostData.title} onChange={handleTitleChange} />
-        </Form.Group>
-        <Form.Group controlId="blogPostBodyText">
-          <Form.Label>Body Text</Form.Label>
-          <Form.Control as="textarea" rows={4} placeholder="Enter the body text" value={blogPostData.bodyText} onChange={handleBodyTextChange} />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
-    </div>
-  );
-};
+import BlogPostsList from './BlogPostsList';
+import BlogPostForm from './BlogPostForm';
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -121,7 +77,10 @@ function App() {
 
   const handleBlogPostSubmit = async (blogPostData) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/blog-posts/create', blogPostData);
+      // Include the username in the blog post data before sending it to the server
+      const postDataWithUsername = { ...blogPostData, username: loginData.username };
+
+      const response = await axios.post('http://localhost:8080/api/blog-posts/create', postDataWithUsername);
       console.log('Blog Post created:', response.data);
 
       // Fetch updated list of blog posts after creating a new one
@@ -167,7 +126,7 @@ function App() {
       </Navbar>
       <Container>
         <h1>Hello, welcome to my blog page!</h1>
-        <BlogPostForm onSubmit={handleBlogPostSubmit} isLoggedIn={isLoggedIn} />
+         <BlogPostForm onSubmit={handleBlogPostSubmit} isLoggedIn={isLoggedIn} username={loginData.username} />
         <BlogPostsList blogPosts={blogPosts} />
       </Container>
 
