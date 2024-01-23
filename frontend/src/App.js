@@ -5,20 +5,24 @@ import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.css';
 import BlogPostsList from './BlogPostsList';
 import BlogPostForm from './BlogPostForm';
+import PrivacyPolicyPopup from './PrivacyPolicyPopup';
 import backgroundImage from './images/R.jpg';
 
+
+//Background Pic
 const appStyle = {
   backgroundImage: `url(${backgroundImage})`,
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center',
-  minHeight: '100vh',  // Adjust as needed
-  padding: '20px',     // Adjust as needed
+  minHeight: '100vh',
+  padding: '20px'
 };
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   const [loginData, setLoginData] = useState({ username: '', password: '' });
   const [registerData, setRegisterData] = useState({ username: '', password: '', confirmPassword: '' });
   const [registrationConfirmation, setRegistrationConfirmation] = useState(null);
@@ -112,24 +116,28 @@ function App() {
 
 
   return (
-    <div style={appStyle}>
+<div style={appStyle}>
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="#home">
-          <i className="fas fa-home" style={{ marginRight: '5px' }}></i>
+            <i className="fas fa-home" style={{ marginRight: '5px' }}></i>
             BlogHomePage
           </Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
+            <Button variant="outline-light" onClick={() => setShowPrivacyPolicy(true)} >
+              <i className="fa-solid fa-building-shield" style={{ marginRight: '5px' }}></i>
+              Privacy Policy
+            </Button>
             {isLoggedIn ? (
-              <Button variant="outline-light" onClick={handleLogout}>
-              <i className="fa-solid fa-user" style={{ color: 'green', marginRight: '5px' }}></i>
+              <Button variant="outline-light" onClick={handleLogout} style={{ marginLeft: '10px' }}>
+                <i className="fa-solid fa-user" style={{ color: 'green', marginRight: '5px' }}></i>
                 Logout
               </Button>
             ) : (
               <div>
-                <Button variant="outline-light" onClick={handleLoginModal}>
-                <i className="fa-regular fa-user" style={{ marginRight: '5px' }}></i>
+                <Button variant="outline-light" onClick={handleLoginModal} style={{ marginLeft: '10px' }}>
+                  <i className="fa-regular fa-user" style={{ marginRight: '5px' }}></i>
                   Login
                 </Button>
                 <Button variant="outline-light" onClick={handleRegisterModal} style={{ marginLeft: '10px' }}>
@@ -168,6 +176,16 @@ function App() {
          <BlogPostForm onSubmit={handleBlogPostSubmit} isLoggedIn={isLoggedIn} username={loginData.username} />
         <BlogPostsList blogPosts={blogPosts, filteredAndSortedPosts} />
       </Container>
+
+      {/* Privacy Policy Modal */}
+            <Modal show={showPrivacyPolicy} onHide={() => setShowPrivacyPolicy(false)}>
+              <Modal.Header closeButton>
+                <Modal.Title>Privacy Policy</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <PrivacyPolicyPopup onClose={() => setShowPrivacyPolicy(false)} />
+              </Modal.Body>
+            </Modal>
 
        {/* Login Modal */}
       <Modal show={showLoginModal} onHide={handleLoginModal}>
