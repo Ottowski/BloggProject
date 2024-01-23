@@ -5,6 +5,16 @@ import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.css';
 import BlogPostsList from './BlogPostsList';
 import BlogPostForm from './BlogPostForm';
+import backgroundImage from './images/R.jpg';
+
+const appStyle = {
+  backgroundImage: `url(${backgroundImage})`,
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center',
+  minHeight: '100vh',  // Adjust as needed
+  padding: '20px',     // Adjust as needed
+};
 
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -102,7 +112,7 @@ function App() {
 
 
   return (
-    <div>
+    <div style={appStyle}>
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="#home">

@@ -5,10 +5,10 @@ body, html {
   font-family: 'Microsoft Sans Serif', 'Arial', sans-serif;
   font-size: 16px;
   color: #000000;
-  background-image: url('/images/R.jpg');
+  /*background-image: url('images/R.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: fixed;*/
 }
 
 
