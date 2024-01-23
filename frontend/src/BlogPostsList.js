@@ -1,5 +1,23 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+
+const formatDate = (dateString) => {
+  try {
+    const options = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+    return new Intl.DateTimeFormat('en-UK', options).format(new Date(dateString));
+  } catch (error) {
+    console.error('Error formatting date:', error);
+    return '';
+  }
+};
+
+
 const BlogPostsList = ({ blogPosts }) => {
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
 
@@ -9,17 +27,6 @@ const BlogPostsList = ({ blogPosts }) => {
 
   const handleCloseBlogPost = () => {
     setSelectedBlogPost(null);
-  };
-
-  const formatDate = (dateString) => {
-    const options = {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    };
-    return new Intl.DateTimeFormat('en-UK', options).format(new Date(dateString));
   };
 
   return (
@@ -43,7 +50,6 @@ const BlogPostsList = ({ blogPosts }) => {
   );
 };
 
-
 const BlogPostPopup = ({ blogPost, onClose }) => {
   return (
     <Modal show={!!blogPost} onHide={onClose}>
@@ -52,7 +58,7 @@ const BlogPostPopup = ({ blogPost, onClose }) => {
       </Modal.Header>
       <Modal.Body>
         <p>{blogPost?.bodyText}</p>
-        <p>Date: {blogPost?.date}, Author: {blogPost?.username}</p> {/* Updated label to "Username" */}
+        <p>Date: {formatDate(blogPost?.date)}, Author: {blogPost?.username}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
