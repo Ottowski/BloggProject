@@ -39,7 +39,7 @@ const BlogPostForm = ({ onSubmit, isLoggedIn, username }) => {
           <Form.Label>Title</Form.Label>
           <Form.Control type="text" placeholder="Enter the title" value={blogPostData.title} onChange={handleTitleChange} />
         </Form.Group>
-        // Inside the render method of BlogPostForm.js
+
         <Form.Group controlId="blogPostUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control type="text" placeholder="Enter your username" value={username} disabled />

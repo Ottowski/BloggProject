@@ -5,6 +5,7 @@ import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.css';
 import BlogPostsList from './BlogPostsList';
 import BlogPostForm from './BlogPostForm';
+
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -158,7 +159,7 @@ function App() {
         <BlogPostsList blogPosts={blogPosts, filteredAndSortedPosts} />
       </Container>
 
-      {/* Login Modal */}
+       {/* Login Modal */}
       <Modal show={showLoginModal} onHide={handleLoginModal}>
         <Modal.Header closeButton>
           <Modal.Title>Login</Modal.Title>
@@ -177,6 +178,13 @@ function App() {
               Login
             </Button>
           </Form>
+
+          {/* Display login confirmation */}
+          {loginConfirmation && (
+            <div style={{ marginTop: '10px', color: 'green' }}>
+              {loginConfirmation}
+            </div>
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleLoginModal}>
