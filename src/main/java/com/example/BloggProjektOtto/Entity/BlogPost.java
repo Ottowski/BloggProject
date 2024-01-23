@@ -21,6 +21,8 @@ public class BlogPost {
     @Getter
     @Column(name = "date")
     private LocalDateTime date;
+    @Column(name = "username")
+    private String username;
     public Long getId() {
         return id;
     }
@@ -30,5 +32,5 @@ public class BlogPost {
     public String getBodyText() {
         return bodyText;
     }
-
+    public String getUsername() { return username;}
 }

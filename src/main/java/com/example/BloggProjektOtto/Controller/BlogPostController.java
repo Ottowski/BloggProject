@@ -42,8 +42,10 @@ public class BlogPostController {
                     postDTO.setTitle(post.getTitle());
                     postDTO.setBodyText(post.getBodyText());
                     postDTO.setDate(post.getDate());
+                    postDTO.setUsername(post.getUsername());  // Set the username
                     return postDTO;
                 })
                 .collect(Collectors.toList());
     }
+
 }

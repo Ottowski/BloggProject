@@ -9,6 +9,7 @@ public class BlogPostDTO {
     private String title;
     private String bodyText;
     private LocalDateTime date;
+    private String username;  // Add this field
 
     public void setId(Long id) {
         this.id = id;
@@ -24,5 +25,9 @@ public class BlogPostDTO {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -1,7 +1,5 @@
-// BlogPostForm.js
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-
 const BlogPostForm = ({ onSubmit, isLoggedIn, username }) => {
   const [blogPostData, setBlogPostData] = useState({ title: '', bodyText: '' });
 
@@ -15,9 +13,15 @@ const BlogPostForm = ({ onSubmit, isLoggedIn, username }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ ...blogPostData, username: username });
+    if (!isLoggedIn) {
+      console.error('User not logged in. Cannot submit blog post.');
+      return;
+    }
+    const postDataWithUsername = { ...blogPostData, username: username };
+    onSubmit(postDataWithUsername);
     setBlogPostData({ title: '', bodyText: '' });
   };
+
 
   if (!isLoggedIn) {
     return (
@@ -35,6 +39,12 @@ const BlogPostForm = ({ onSubmit, isLoggedIn, username }) => {
           <Form.Label>Title</Form.Label>
           <Form.Control type="text" placeholder="Enter the title" value={blogPostData.title} onChange={handleTitleChange} />
         </Form.Group>
+        // Inside the render method of BlogPostForm.js
+        <Form.Group controlId="blogPostUsername">
+          <Form.Label>Username</Form.Label>
+          <Form.Control type="text" placeholder="Enter your username" value={username} disabled />
+        </Form.Group>
+
         <Form.Group controlId="blogPostBodyText">
           <Form.Label>Body Text</Form.Label>
           <Form.Control as="textarea" rows={4} placeholder="Enter the body text" value={blogPostData.bodyText} onChange={handleBodyTextChange} />

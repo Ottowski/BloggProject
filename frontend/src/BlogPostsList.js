@@ -21,7 +21,7 @@ const BlogPostsList = ({ blogPosts }) => {
               {post.title}
             </h3>
             <p>{post.bodyText}</p>
-            <p>Date: {post.date}, User: {post.username}</p>
+            <p>Date: {post.date}, Username: {post.username}</p> {/* Updated label to "Username" */}
           </div>
         ))
       ) : (
@@ -41,7 +41,7 @@ const BlogPostPopup = ({ blogPost, onClose }) => {
       </Modal.Header>
       <Modal.Body>
         <p>{blogPost?.bodyText}</p>
-        <p>Date: {blogPost?.date}, User: {blogPost?.username}</p>
+        <p>Date: {blogPost?.date}, Username: {blogPost?.username}</p> {/* Updated label to "Username" */}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>

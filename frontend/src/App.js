@@ -5,8 +5,6 @@ import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.css';
 import BlogPostsList from './BlogPostsList';
 import BlogPostForm from './BlogPostForm';
-
-
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -16,17 +14,14 @@ function App() {
   const [loginConfirmation, setLoginConfirmation] = useState(null);
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [blogPosts, setBlogPosts] = useState([]);
-
   const handleLoginModal = () => {
     setShowLoginModal(!showLoginModal);
     setLoginConfirmation(null);
   };
-
   const handleRegisterModal = () => {
     setShowRegisterModal(!showRegisterModal);
     setRegistrationConfirmation(null);
   };
-
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -41,11 +36,9 @@ function App() {
       setLoginConfirmation('Login failed. Please check your credentials.');
     }
   };
-
   const handleLogout = () => {
     setLoggedIn(false);
   };
-
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
@@ -65,7 +58,6 @@ function App() {
       setRegistrationConfirmation('Registration failed. Please try again.');
     }
   };
-
   const fetchAllBlogPosts = async () => {
     try {
       const response = await axios.get('http://localhost:8080/api/blog-posts/all');
@@ -75,40 +67,26 @@ function App() {
       console.error('Error fetching Blog Posts:', error);
     }
   };
-
   const handleBlogPostSubmit = async (blogPostData) => {
     try {
-      // Include the username in the blog post data before sending it to the server
       const postDataWithUsername = { ...blogPostData, username: loginData.username };
-
       const response = await axios.post('http://localhost:8080/api/blog-posts/create', postDataWithUsername);
       console.log('Blog Post created:', response.data);
-
-      // Fetch updated list of blog posts after creating a new one
       fetchAllBlogPosts();
     } catch (error) {
       console.error('Error creating Blog Post:', error);
-      // Handle error, e.g., show an error message
     }
   };
-
   useEffect(() => {
     fetchAllBlogPosts();
   }, [isLoggedIn]);
-  // Inside the App component
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortOption, setSortOption] = useState('latest'); // or 'oldest'
-
-  // ...
-
-  // Add a new function for sorting the blog posts
+  const [sortOption, setSortOption] = useState('latest');
   const sortBlogPosts = (posts, option) => {
     return option === 'latest'
       ? [...posts].sort((a, b) => new Date(b.date) - new Date(a.date))
       : [...posts].sort((a, b) => new Date(a.date) - new Date(b.date));
   };
-
-  // Filter and sort the blog posts based on search and sort options
   const filteredAndSortedPosts = useMemo(() => {
     const filteredPosts = blogPosts.filter(
       (post) =>
@@ -117,10 +95,6 @@ function App() {
     );
     return sortBlogPosts(filteredPosts, sortOption);
   }, [blogPosts, searchQuery, sortOption]);
-
-  // ...
-
-  // Modify the useEffect dependency to include sortOption
   useEffect(() => {
     fetchAllBlogPosts();
   }, [isLoggedIn, sortOption]);
@@ -208,7 +182,6 @@ function App() {
           <Button variant="secondary" onClick={handleLoginModal}>
             Close
           </Button>
-          {/* Add any additional buttons or elements */}
         </Modal.Footer>
       </Modal>
 
@@ -247,7 +220,7 @@ function App() {
           <Button variant="secondary" onClick={handleRegisterModal}>
             Close
           </Button>
-          {/* Add any additional buttons or elements */}
+
         </Modal.Footer>
       </Modal>
     </div>
