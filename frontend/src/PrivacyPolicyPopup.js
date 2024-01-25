@@ -40,7 +40,7 @@ const PrivacyPolicyPopup = ({ onClose }) => {
       <p>If you have questions or concerns about this Privacy Policy, please contact us at bloghomepage@BlogHomePage.com.
 
          Remember, it's crucial to adapt this template to your specific practices and applicable laws. Consider consulting with a legal professional to ensure compliance with privacy regulations in your jurisdiction. </p>
-      <button onClick={onClose}>Close</button>
+      <button variant="secondary"onClick={onClose}>Close</button>
     </div>
   );
 };
