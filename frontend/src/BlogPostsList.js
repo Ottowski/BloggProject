@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-
 const formatDate = (dateString) => {
   try {
     const options = {
@@ -16,19 +15,14 @@ const formatDate = (dateString) => {
     return '';
   }
 };
-
-
 const BlogPostsList = ({ blogPosts }) => {
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
-
   const handleOpenBlogPost = (blogPost) => {
     setSelectedBlogPost(blogPost);
   };
-
   const handleCloseBlogPost = () => {
     setSelectedBlogPost(null);
   };
-
   return (
     <div>
       {Array.isArray(blogPosts) ? (
@@ -49,7 +43,6 @@ const BlogPostsList = ({ blogPosts }) => {
     </div>
   );
 };
-
 const BlogPostPopup = ({ blogPost, onClose }) => {
   return (
     <Modal show={!!blogPost} onHide={onClose}>
@@ -68,5 +61,4 @@ const BlogPostPopup = ({ blogPost, onClose }) => {
     </Modal>
   );
 };
-
 export default BlogPostsList;

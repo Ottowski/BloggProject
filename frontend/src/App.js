@@ -7,8 +7,6 @@ import BlogPostsList from './BlogPostsList';
 import BlogPostForm from './BlogPostForm';
 import PrivacyPolicyPopup from './PrivacyPolicyPopup';
 import backgroundImage from './images/R.jpg';
-
-
 //Background Pic
 const appStyle = {
   backgroundImage: `url(${backgroundImage})`,
@@ -18,7 +16,6 @@ const appStyle = {
   minHeight: '100vh',
   padding: '20px'
 };
-
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -113,8 +110,6 @@ function App() {
   useEffect(() => {
     fetchAllBlogPosts();
   }, [isLoggedIn, sortOption]);
-
-
   return (
 <div style={appStyle}>
       <Navbar bg="dark" variant="dark">
@@ -262,5 +257,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

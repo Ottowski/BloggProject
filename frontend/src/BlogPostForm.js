@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 const BlogPostForm = ({ onSubmit, isLoggedIn, username }) => {
   const [blogPostData, setBlogPostData] = useState({ title: '', bodyText: '' });
-
   const handleTitleChange = (e) => {
     setBlogPostData({ ...blogPostData, title: e.target.value });
   };
-
   const handleBodyTextChange = (e) => {
     setBlogPostData({ ...blogPostData, bodyText: e.target.value });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isLoggedIn) {
@@ -21,16 +18,13 @@ const BlogPostForm = ({ onSubmit, isLoggedIn, username }) => {
     onSubmit(postDataWithUsername);
     setBlogPostData({ title: '', bodyText: '' });
   };
-
-
   if (!isLoggedIn) {
     return (
       <div>
         <p>Please log in to create a blog post.</p>
       </div>
     );
-  }
-
+  };
   return (
     <div>
       <h2>Create Blog Post</h2>
@@ -56,5 +50,4 @@ const BlogPostForm = ({ onSubmit, isLoggedIn, username }) => {
     </div>
   );
 };
-
 export default BlogPostForm;
