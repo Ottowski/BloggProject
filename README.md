@@ -1,4 +1,4 @@
-# 📰 BloggProjektOtto
+# 📰 BloggProject
 
 A complete backend REST API built with **Java Spring Boot** for managing users, registration, login, and authentication using **JWT tokens**.
 
@@ -55,8 +55,8 @@ Make sure the following are installed:
 ### 2. 📁 Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/BloggProjektOtto.git
-cd BloggProjektOtto
+git clone https://github.com/Ottowski/BloggProject.git
+cd BloggProject
 3. ⚙️ Application Configuration
 In the project folder, open:
 
@@ -145,7 +145,7 @@ fetch("http://localhost:8080/api/user/me", {
 🛠️ Project Structure
 mathematica
 
-BloggProjektOtto
+BloggProject
 ├── Config/
 │   └── SecurityConfig.java
 ├── Controller/
